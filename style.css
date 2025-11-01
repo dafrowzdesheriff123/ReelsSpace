@@ -1,4 +1,8 @@
-/* General layout */
+/* ---------------------------
+   GENERAL PAGE SETUP
+----------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Italianno&display=swap');
+
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -17,40 +21,45 @@ body {
   width: 100%;
 }
 
-/* Glassmorphism card */
+/* ---------------------------
+   GLASSMORPHIC CARD
+----------------------------*/
 .card {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(16px);
   border-radius: 20px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-  width: 350px;
-  padding: 40px 30px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+  width: 370px;
+  padding: 45px 35px;
   color: #fff;
   text-align: center;
   transition: all 0.5s ease;
   position: relative;
+  animation: fadeIn 1s ease-in-out;
 }
 
-/* Logo inside card */
+/* ---------------------------
+   LOGO + TITLE INSIDE CARD
+----------------------------*/
 .logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 12px;
+  margin-bottom: 18px;
 }
 
 .logo .diamond {
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
   transform: rotate(45deg);
   border: 2px solid #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  background: #5b0000; /* Dark maroon */
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 18px rgba(91, 0, 0, 0.6);
 }
 
 .logo .letters {
@@ -63,13 +72,19 @@ body {
 }
 
 .logo h1 {
-  font-size: 1.3rem;
-  color: #fff;
-  letter-spacing: 0.5px;
-  font-weight: 600;
+  font-size: 1.5rem;
+  color: #b03060; /* Light maroon */
+  letter-spacing: 1px;
+  font-weight: 700;
+  font-family: 'Italianno', cursive;
+  font-style: italic;
+  transform: skew(-10deg);
+  text-shadow: 0 0 10px rgba(176, 48, 96, 0.4);
 }
 
-/* Forms */
+/* ---------------------------
+   FORMS + INPUTS
+----------------------------*/
 .form {
   display: none;
   animation: fadeIn 0.5s ease;
@@ -79,32 +94,44 @@ body {
   display: block;
 }
 
+h2 {
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
 input {
   width: 100%;
   padding: 12px;
   margin: 10px 0;
   border: none;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
   font-size: 1rem;
   outline: none;
 }
 
+input::placeholder {
+  color: #ffffff; /* White placeholder text */
+  opacity: 0.8;
+}
+
 button {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(135deg, #6e45e2, #88d3ce);
+  background: linear-gradient(135deg, #5b0000, #b03060);
   border: none;
   border-radius: 10px;
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 button:hover {
-  opacity: 0.9;
+  transform: scale(1.03);
+  box-shadow: 0 0 10px rgba(176, 48, 96, 0.6);
 }
 
 .google-btn {
@@ -121,6 +148,9 @@ button:hover {
   height: 20px;
 }
 
+/* ---------------------------
+   DIVIDER + LINKS
+----------------------------*/
 .divider {
   margin: 20px 0;
   position: relative;
@@ -139,11 +169,26 @@ p {
 }
 
 a {
-  color: #88d3ce;
+  color: #b03060; /* Light maroon links */
   text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
+/* ---------------------------
+   ANIMATIONS
+----------------------------*/
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
