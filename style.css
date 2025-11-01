@@ -1,52 +1,51 @@
-/* ---------------------------
-   GENERAL PAGE SETUP
-----------------------------*/
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Italianno&display=swap');
+/* ===============================
+   GLOBAL STYLES
+================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
 
 body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-  height: 100vh;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1a1a1a, #000);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-/* ---------------------------
-   GLASSMORPHIC CARD
-----------------------------*/
+/* ===============================
+   GLASS CARD
+================================= */
 .card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(16px);
+  width: 380px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
   border-radius: 20px;
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
-  width: 370px;
-  padding: 45px 35px;
-  color: #fff;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+  padding: 30px 40px;
   text-align: center;
-  transition: all 0.5s ease;
-  position: relative;
-  animation: fadeIn 1s ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: 0.3s;
 }
 
-/* ---------------------------
-   LOGO + TITLE INSIDE CARD
-----------------------------*/
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+}
+
+/* ===============================
+   LOGO & BRAND
+================================= */
 .logo {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .logo .diamond {
@@ -57,138 +56,142 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #5b0000; /* Dark maroon */
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 18px rgba(91, 0, 0, 0.6);
+  background: #5b0000; /* dark maroon */
+  box-shadow: 0 0 20px rgba(176, 48, 96, 0.4);
 }
 
 .logo .letters {
   transform: rotate(-45deg);
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  font-style: italic;
   color: #fff;
-  letter-spacing: 1px;
 }
 
+/* ===============================
+   ANIMATED BRAND NAME
+================================= */
 .logo h1 {
-  font-size: 1.5rem;
-  color: #b03060; /* Light maroon */
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
   letter-spacing: 1px;
-  font-weight: 700;
-  font-family: 'Italianno', cursive;
-  font-style: italic;
-  transform: skew(-10deg);
-  text-shadow: 0 0 10px rgba(176, 48, 96, 0.4);
+  background: linear-gradient(
+    90deg,
+    #b03060,
+    #ff6699,
+    #ff9966,
+    #b03060
+  );
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: colorFlow 3.5s linear infinite;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
-/* ---------------------------
-   FORMS + INPUTS
-----------------------------*/
-.form {
-  display: none;
-  animation: fadeIn 0.5s ease;
+@keyframes colorFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-.form.active {
-  display: block;
+/* ===============================
+   INPUT FIELDS
+================================= */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-h2 {
-  font-weight: 600;
-  margin-bottom: 15px;
+label {
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 500;
   color: #fff;
+  margin-bottom: 5px;
 }
 
 input {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
+  padding: 10px 12px;
+  border-radius: 8px;
   border: none;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  font-size: 1rem;
   outline: none;
-}
-
-input::placeholder {
-  color: #ffffff; /* White placeholder text */
-  opacity: 0.8;
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(135deg, #5b0000, #b03060);
-  border: none;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 10px rgba(176, 48, 96, 0.4);
+}
+
+/* ===============================
+   BUTTONS
+================================= */
+button {
+  margin-top: 15px;
+  background: linear-gradient(90deg, #b03060, #ff6699);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: all 0.3s;
 }
 
 button:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 10px rgba(176, 48, 96, 0.6);
+  background: linear-gradient(90deg, #ff9966, #b03060);
+  box-shadow: 0 0 20px rgba(255, 102, 153, 0.4);
 }
 
-.google-btn {
-  background: rgba(255, 255, 255, 0.2);
+/* ===============================
+   CONTINUE WITH GOOGLE
+================================= */
+.google-login {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  color: #fff;
-}
-
-.google-btn img {
-  width: 20px;
-  height: 20px;
-}
-
-/* ---------------------------
-   DIVIDER + LINKS
-----------------------------*/
-.divider {
-  margin: 20px 0;
-  position: relative;
-}
-
-.divider span {
   background: rgba(255, 255, 255, 0.1);
-  padding: 0 10px;
-  font-size: 0.9rem;
-  color: #ccc;
-}
-
-p {
-  font-size: 0.9rem;
-  margin-top: 15px;
-}
-
-a {
-  color: #b03060; /* Light maroon links */
-  text-decoration: none;
-  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  margin-top: 10px;
+  cursor: pointer;
   transition: 0.3s;
 }
 
-a:hover {
-  text-decoration: underline;
+.google-login:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
-/* ---------------------------
-   ANIMATIONS
-----------------------------*/
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ===============================
+   FOOTER LINK
+================================= */
+.footer {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer a {
+  color: #ff6699;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer a:hover {
+  text-decoration: underline;
 }
