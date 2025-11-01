@@ -3,77 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ReelsAreena - Sign Up</title>
+  <title>ReelsAreena | Sign Up & Login</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet" />
 </head>
-
 <body>
   <div class="container">
-    <div class="card">
-
-      <!-- ✦ RA Diamond Logo ✦ -->
-      <div class="ra-logo" title="ReelsAreena">
-        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="raGrad" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0%" stop-color="#ff416c" />
-              <stop offset="50%" stop-color="#ff6b8f" />
-              <stop offset="100%" stop-color="#833ab4" />
-            </linearGradient>
-            <linearGradient id="shine" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0" stop-color="rgba(255,255,255,0.6)" />
-              <stop offset="1" stop-color="rgba(255,255,255,0.05)" />
-            </linearGradient>
-            <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
-              <feOffset dx="0" dy="1" result="off" />
-              <feGaussianBlur in="off" stdDeviation="1.2" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="arithmetic" k2="-1" k3="1" result="inner" />
-              <feMerge>
-                <feMergeNode in="inner" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-            <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
-              <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.25" />
-            </filter>
-          </defs>
-          <g filter="url(#dropShadow)">
-            <polygon points="60,12 108,60 60,108 12,60" fill="url(#raGrad)" stroke="rgba(255,255,255,0.15)"
-              stroke-width="2" style="mix-blend-mode:screen" />
-            <polygon points="60,12 108,60 60,108 12,60" fill="url(#shine)" opacity="0.14"
-              transform="translate(0,-6) scale(1,0.5)" />
-          </g>
-          <g filter="url(#innerShadow)" transform="translate(12,8)">
-            <text x="6" y="74" font-family="Poppins" font-weight="800" font-size="78" fill="url(#raGrad)"
-              transform="skewX(-12)">R</text>
-            <text x="36" y="76" font-family="Poppins" font-weight="800" font-size="78" fill="url(#raGrad)"
-              transform="skewX(-12)">A</text>
-          </g>
-        </svg>
+    <!-- Logo Section -->
+    <div class="logo">
+      <div class="diamond">
+        <span class="letters">RA</span>
       </div>
+      <h1>ReelsAreena</h1>
+    </div>
 
-      <h2>Create Account</h2>
-      <form id="signup-form">
-        <div class="input-group"><input type="text" placeholder="Username" required></div>
-        <div class="input-group"><input type="tel" placeholder="Phone Number" required></div>
-        <div class="input-group"><input type="email" placeholder="Email" required></div>
-        <div class="input-group"><input type="password" placeholder="Password" required></div>
-        <div class="input-group"><input type="password" placeholder="Confirm Password" required></div>
+    <!-- Card Wrapper -->
+    <div class="card" id="form-card">
+      <!-- Signup Form -->
+      <form id="signup-form" class="form active">
+        <h2>Create Account</h2>
+        <input type="text" placeholder="Username" required />
+        <input type="tel" placeholder="Phone Number" required />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <input type="password" placeholder="Confirm Password" required />
+        <button type="submit">Create Account</button>
 
-        <button type="submit" class="btn">Create Account</button>
-
-        <div class="divider">or continue with</div>
+        <div class="divider">
+          <span>or continue with</span>
+        </div>
         <button type="button" class="google-btn">
-          <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" />
           Sign in with Google
         </button>
 
-        <p class="redirect">Already have an account?
-          <a href="login.html" class="link">Login here</a>
+        <p>Already have an account? 
+          <a href="#" id="to-login">Login here</a>
+        </p>
+      </form>
+
+      <!-- Login Form -->
+      <form id="login-form" class="form">
+        <h2>Welcome Back</h2>
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+
+        <div class="divider">
+          <span>or continue with</span>
+        </div>
+        <button type="button" class="google-btn">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" />
+          Login with Google
+        </button>
+
+        <p>Don’t have an account?
+          <a href="#" id="to-signup">Create one</a>
         </p>
       </form>
     </div>
   </div>
+
+  <script>
+    // Toggle between signup and login
+    const signupForm = document.getElementById('signup-form');
+    const loginForm = document.getElementById('login-form');
+    const toLogin = document.getElementById('to-login');
+    const toSignup = document.getElementById('to-signup');
+
+    toLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      signupForm.classList.remove('active');
+      loginForm.classList.add('active');
+    });
+
+    toSignup.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginForm.classList.remove('active');
+      signupForm.classList.add('active');
+    });
+  </script>
 </body>
 </html>
