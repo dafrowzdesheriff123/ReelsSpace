@@ -1,249 +1,193 @@
-/* ------------------------------------
-   ReelsArena - Modern Glass Login Page
-   Final glowing version
------------------------------------- */
-
-/* Import font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
+/* === Global Styles === */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
 body {
-  background: #000; /* Dark outer background */
-  font-family: "Poppins", sans-serif;
   height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #111 0%, #000 100%);
   overflow: hidden;
 }
 
-/* Glassmorphism Card */
+/* === Glassmorphism Card === */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .card {
-  width: 380px;
-  background: rgba(255, 255, 255, 0.08);
+  width: 360px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-  padding: 40px 32px;
-  text-align: center;
-  transition: transform 0.3s ease;
-}
-.card:hover {
-  transform: translateY(-5px);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease;
 }
 
-/* Logo Section */
+/* === Logo & Title === */
 .logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
-.logo .diamond {
-  width: 55px;
-  height: 55px;
+.diamond {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(45deg, #ff00cc, #3333ff);
   transform: rotate(45deg);
-  background: #800000; /* dark maroon */
+  margin: 0 auto 1rem;
   display: flex;
-  align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(176, 48, 96, 0.4);
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
 }
 
-.logo .letters {
+.letters {
   transform: rotate(-45deg);
-  font-weight: 700;
   color: #fff;
-  font-size: 1.05rem;
+  font-weight: 700;
+  font-size: 22px;
 }
 
+/* === ReelsArena Title with Glow === */
 .logo h1 {
-  margin: 0;
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 800;
-  text-transform: uppercase;
+  color: #fff;
   letter-spacing: 1px;
-  color: #a05252; /* Light maroon */
-  animation: colorGlow 6s linear infinite;
-  text-shadow: 0 0 10px rgba(255, 80, 80, 0.5);
+  text-transform: uppercase;
+  text-shadow: 0 0 10px #ff00cc, 0 0 20px #3333ff;
+  animation: glow 4s infinite linear;
 }
 
-@keyframes colorGlow {
-  0% { color: #ff6666; text-shadow: 0 0 8px #ff6666, 0 0 16px #ff9999; }
-  25% { color: #ff99cc; text-shadow: 0 0 10px #ff99cc, 0 0 18px #ff66cc; }
-  50% { color: #ff3366; text-shadow: 0 0 12px #ff3366, 0 0 22px #ff6699; }
-  75% { color: #ff66cc; text-shadow: 0 0 10px #ff66cc, 0 0 20px #ff99ff; }
-  100% { color: #ff6666; text-shadow: 0 0 8px #ff6666, 0 0 16px #ff9999; }
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 10px #ff00cc, 0 0 20px #3333ff;
+  }
+  50% {
+    text-shadow: 0 0 20px #00ffcc, 0 0 30px #ff00ff;
+  }
+  100% {
+    text-shadow: 0 0 10px #ff00cc, 0 0 20px #3333ff;
+  }
 }
 
-/* Forms */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
+/* === Forms === */
 .form {
   display: none;
-  opacity: 0;
-  height: 0;
-  overflow: hidden;
-  transition: opacity 0.3s ease, height 0.3s ease;
-}
-.form.active {
-  display: flex;
-  opacity: 1;
-  height: auto;
+  flex-direction: column;
 }
 
-/* Input fields */
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
+.form.active {
+  display: flex;
+}
+
+.form h2 {
+  color: #fff;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.form input {
+  margin: 0.5rem 0;
+  padding: 0.8rem;
   border: none;
+  border-radius: 8px;
+  outline: none;
   background: rgba(255, 255, 255, 0.15);
   color: #fff;
   font-size: 0.95rem;
-  transition: all 0.25s ease;
+  transition: background 0.3s ease;
 }
 
-input::placeholder {
-  color: rgba(255, 255, 255, 0.8);
+.form input::placeholder {
+  color: #ccc;
 }
 
-input:focus {
+.form input:focus {
   background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 0 8px rgba(255, 102, 153, 0.3);
-  outline: none;
 }
 
-/* Primary Button */
-button.primary {
-  width: 100%;
-  padding: 12px;
+/* === Buttons === */
+button {
+  margin-top: 1rem;
+  padding: 0.8rem;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #b03060, #ff6699);
-  color: #fff;
-  font-weight: 700;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-button.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(176, 48, 96, 0.3);
+  transition: all 0.3s ease;
 }
 
-/* Google Button */
+button[type="submit"] {
+  background: linear-gradient(45deg, #ff00cc, #3333ff);
+  color: #fff;
+}
+
+button[type="submit"]:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ff00cc;
+}
+
+/* === Google Button === */
 .google-btn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  cursor: pointer;
-  margin-top: 10px;
+  background: #fff;
+  color: #333;
   font-weight: 600;
-  font-size: 0.95rem;
-  width: 100%;
-  transition: background 0.25s ease, transform 0.25s ease;
-}
-.google-btn:hover {
-  background: rgba(255, 255, 255, 0.18);
-  transform: translateY(-1px);
-}
-.google-btn img {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
+  margin-top: 1rem;
 }
 
-/* Divider */
+.google-btn img {
+  width: 20px;
+  margin-right: 8px;
+}
+
+/* === Divider === */
 .divider {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #aaa;
-  margin: 12px 0;
-  font-size: 0.9rem;
+  color: #bbb;
+  font-size: 0.85rem;
+  margin: 1rem 0;
 }
+
 .divider::before,
 .divider::after {
-  content: "";
+  content: '';
   flex: 1;
   height: 1px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
   margin: 0 10px;
 }
 
-/* Glowing Create Account Button */
-.create-account-btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  background: rgba(255, 255, 255, 0.6);
-  color: #000;
-  font-weight: 700;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  font-size: 1rem;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
-  animation: buttonGlow 5s ease-in-out infinite;
-}
-
-@keyframes buttonGlow {
-  0% { box-shadow: 0 0 10px #ffffff, 0 0 20px #ff99cc; }
-  50% { box-shadow: 0 0 15px #ffccff, 0 0 30px #ff6699; }
-  100% { box-shadow: 0 0 10px #ffffff, 0 0 20px #ff99cc; }
-}
-
-.create-account-btn:hover {
-  background: rgba(255, 255, 255, 0.85);
-  transform: translateY(-2px);
-}
-
-/* Already have account text */
-.already-account {
-  margin-top: 14px;
-  color: #fff;
+/* === Links === */
+p {
+  color: #ddd;
+  text-align: center;
+  margin-top: 1rem;
   font-size: 0.9rem;
 }
-.already-account a {
-  color: #ff6699;
+
+a {
+  color: #00bfff;
   text-decoration: none;
-  font-weight: 700;
-}
-.already-account a:hover {
-  text-decoration: underline;
+  transition: color 0.3s;
 }
 
-/* Responsive */
-@media (max-width: 420px) {
-  .card {
-    width: 90%;
-    padding: 30px;
-  }
-  .logo h1 {
-    font-size: 1.4rem;
-  }
+a:hover {
+  color: #ff00ff;
 }
