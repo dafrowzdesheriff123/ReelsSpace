@@ -19,7 +19,8 @@ body {
   min-height: 100vh;
   background: radial-gradient(circle at top, #111 0%, #000 100%);
   background-attachment: fixed;
-  overflow: hidden;
+  overflow-y: auto; /* ✅ allow vertical scrolling */
+  scroll-behavior: smooth;
 }
 
 /* === Container === */
@@ -28,8 +29,9 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 1rem;
-  height: 100%;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* === Card === */
@@ -46,7 +48,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  transform: scale(1);
+  max-height: 90vh;     /* ✅ fits within view */
+  overflow-y: auto;     /* ✅ internal scroll when too tall */
+  scrollbar-width: thin;
+  scrollbar-color: #444 #111;
 }
 
 /* === Logo Section === */
@@ -210,48 +215,46 @@ a:hover {
   color: #ff00ff;
 }
 
-/* === RESPONSIVE === */
+/* === RESPONSIVE DESIGN === */
 
-/* Tablets and small laptops */
+/* Short laptop screens */
 @media (max-height: 800px) {
   .card {
-    transform: scale(0.95);
+    max-height: 85vh;
+    padding: 1.5rem;
   }
   .logo h1 {
     font-size: 1.8rem;
   }
 }
 
-/* Small laptops or short windows */
-@media (max-height: 700px) {
+/* Tablets and phones */
+@media (max-width: 768px) {
   .card {
-    transform: scale(0.9);
+    width: 90%;
+    max-height: 90vh;
+    padding: 1.5rem;
   }
-  .diamond {
-    width: 60px;
-    height: 60px;
-  }
-  .letters {
-    font-size: 18px;
-  }
+
   .logo h1 {
     font-size: 1.6rem;
   }
+
+  .form input {
+    padding: 0.8rem;
+  }
+
+  button {
+    padding: 0.8rem;
+  }
 }
 
-/* Mobile Phones */
+/* Small phones */
 @media (max-width: 480px) {
-  body {
-    padding: 1rem;
-  }
-
   .card {
-    max-width: 95%;
-    transform: scale(0.95);
-  }
-
-  .logo h1 {
-    font-size: 1.5rem;
+    width: 95%;
+    max-height: 90vh;
+    padding: 1.2rem;
   }
 
   .diamond {
@@ -261,5 +264,9 @@ a:hover {
 
   .letters {
     font-size: 16px;
+  }
+
+  .logo h1 {
+    font-size: 1.5rem;
   }
 }
