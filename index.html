@@ -21,17 +21,17 @@
       <!-- Signup Form -->
       <form id="signup-form" class="form active">
         <h2>Create Account</h2>
-        <input type="text" placeholder="Username" required />
-        <input type="tel" placeholder="Phone Number" required />
-        <input type="email" placeholder="Email" required />
-        <input type="password" placeholder="Password" required />
-        <input type="password" placeholder="Confirm Password" required />
+        <input type="text" id="signup-username" placeholder="Username" required />
+        <input type="tel" id="signup-phone" placeholder="Phone Number" required />
+        <input type="email" id="signup-email" placeholder="Email" required />
+        <input type="password" id="signup-password" placeholder="Password" required />
+        <input type="password" id="signup-confirm" placeholder="Confirm Password" required />
         <button type="submit">Create Account</button>
 
         <div class="divider">
           <span>or continue with</span>
         </div>
-        <button type="button" class="google-btn">
+        <button type="button" class="google-btn" id="google-signup">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" />
           Sign in with Google
         </button>
@@ -44,14 +44,14 @@
       <!-- Login Form -->
       <form id="login-form" class="form">
         <h2>Welcome Back</h2>
-        <input type="email" placeholder="Email" required />
-        <input type="password" placeholder="Password" required />
+        <input type="email" id="login-email" placeholder="Email" required />
+        <input type="password" id="login-password" placeholder="Password" required />
         <button type="submit">Login</button>
 
         <div class="divider">
           <span>or continue with</span>
         </div>
-        <button type="button" class="google-btn">
+        <button type="button" class="google-btn" id="google-login">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" />
           Login with Google
         </button>
@@ -80,6 +80,101 @@
       e.preventDefault();
       loginForm.classList.remove('active');
       signupForm.classList.add('active');
+    });
+  </script>
+
+  <!-- 🔥 Firebase Connection -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { 
+      getAuth, 
+      createUserWithEmailAndPassword, 
+      signInWithEmailAndPassword, 
+      GoogleAuthProvider, 
+      signInWithPopup 
+    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+    // Your Firebase Config
+   const firebaseConfig = {
+  apiKey: "AIzaSyBjRVoHWTz1Z14ApnLiCTW6zddaWBSaWYU",
+  authDomain: "reelsarena-c8f0a.firebaseapp.com",
+  projectId: "reelsarena-c8f0a",
+  storageBucket: "reelsarena-c8f0a.firebasestorage.app",
+  messagingSenderId: "809960694743",
+  appId: "1:809960694743:web:b454f4e8b2ce33205c2192",
+  measurementId: "G-7F2JDV6RRQ"
+};
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Signup
+    const signup = document.getElementById("signup-form");
+    signup.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
+      const confirm = document.getElementById("signup-confirm").value;
+
+      if (password !== confirm) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("Account created successfully!");
+          console.log(userCredential.user);
+          signup.reset();
+        })
+        .catch((error) => {
+          alert("Signup failed: " + error.message);
+        });
+    });
+
+    // Login
+    const login = document.getElementById("login-form");
+    login.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("Login successful!");
+          console.log(userCredential.user);
+          window.location.href = "dashboard.html"; // redirect
+        })
+        .catch((error) => {
+          alert("Login failed: " + error.message);
+        });
+    });
+
+    // Google Sign-In (both forms)
+    document.getElementById("google-login").addEventListener("click", () => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          alert("Google login successful!");
+          console.log(result.user);
+          window.location.href = "dashboard.html";
+        })
+        .catch((error) => {
+          alert("Google login failed: " + error.message);
+        });
+    });
+
+    document.getElementById("google-signup").addEventListener("click", () => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          alert("Google signup successful!");
+          console.log(result.user);
+          window.location.href = "dashboard.html";
+        })
+        .catch((error) => {
+          alert("Google signup failed: " + error.message);
+        });
     });
   </script>
 </body>
