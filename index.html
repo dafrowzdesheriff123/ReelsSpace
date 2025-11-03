@@ -5,43 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ReelsArena | Login</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: none;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <div class="card" id="form-card">
       <div class="logo">
-        <div class="diamond">
-          <span class="letters">RA</span>
-        </div>
+        <div class="diamond"><span class="letters">RA</span></div>
         <h1>ReelsArena</h1>
       </div>
-
-      <!-- SIGNUP FORM -->
-      <form id="signup-form" class="form">
-        <h2>Create Account</h2>
-        <input type="text" id="signup-username" placeholder="Username" required />
-        <input type="tel" id="signup-phone" placeholder="Phone Number" required />
-        <input type="email" id="signup-email" placeholder="Email" required />
-        <input type="password" id="signup-password" placeholder="Password" required />
-        <input type="password" id="signup-confirm" placeholder="Confirm Password" required />
-        <button type="submit">Create Account</button>
-
-        <div class="divider"><span>or continue with</span></div>
-        <button type="button" class="google-btn" id="google-signup">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" />
-          Sign up with Google
-        </button>
-
-        <p>Already have an account? 
-          <a href="#" id="to-login">Login here</a>
-        </p>
-      </form>
 
       <!-- LOGIN FORM -->
       <form id="login-form" class="form active">
         <h2>Welcome Back</h2>
         <input type="email" id="login-email" placeholder="Email" required />
+        <div id="login-email-error" class="error"></div>
+
         <input type="password" id="login-password" placeholder="Password" required />
+        <div id="login-password-error" class="error"></div>
+
         <button type="submit">Login</button>
 
         <div class="divider"><span>or continue with</span></div>
@@ -50,112 +40,182 @@
           Login with Google
         </button>
 
-        <p>Don’t have an account?
-          <a href="#" id="to-signup">Create one</a>
-        </p>
+        <p>Don’t have an account? <a href="#" id="to-signup">Create one</a></p>
+      </form>
+
+      <!-- SIGNUP FORM -->
+      <form id="signup-form" class="form">
+        <h2>Create Account</h2>
+        <input type="text" id="signup-username" placeholder="Username" required />
+        <input type="tel" id="signup-phone" placeholder="Phone Number" required />
+        <input type="email" id="signup-email" placeholder="Email" required />
+        <div id="signup-email-error" class="error"></div>
+        <input type="password" id="signup-password" placeholder="Password" required />
+        <div id="signup-password-error" class="error"></div>
+        <input type="password" id="signup-confirm" placeholder="Confirm Password" required />
+        <div id="signup-confirm-error" class="error"></div>
+
+        <button type="submit">Create Account</button>
+
+        <div class="divider"><span>or continue with</span></div>
+        <button type="button" class="google-btn" id="google-signup">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" />
+          Sign up with Google
+        </button>
+
+        <p>Already have an account? <a href="#" id="to-login">Login here</a></p>
       </form>
     </div>
   </div>
 
-  <!-- ====== FORM TOGGLE ====== -->
-  <script>
-    const signupForm = document.getElementById('signup-form');
-    const loginForm = document.getElementById('login-form');
-    const toLogin = document.getElementById('to-login');
-    const toSignup = document.getElementById('to-signup');
-
-    // Always start with login active
-    loginForm.classList.add('active');
-    signupForm.classList.remove('active');
-
-    toLogin.addEventListener('click', (e) => {
-      e.preventDefault();
-      signupForm.classList.remove('active');
-      loginForm.classList.add('active');
-    });
-
-    toSignup.addEventListener('click', (e) => {
-      e.preventDefault();
-      loginForm.classList.remove('active');
-      signupForm.classList.add('active');
-    });
-  </script>
-
-  <!-- ====== FIREBASE (SILENT LOGIN + REDIRECT) ====== -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { 
       getAuth, 
       createUserWithEmailAndPassword, 
       signInWithEmailAndPassword, 
       GoogleAuthProvider, 
-      signInWithRedirect, 
-      getRedirectResult, 
-      onAuthStateChanged 
-    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+      signInWithPopup 
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-    // === Your Firebase Configuration ===
+    // 🔥 Replace this with your Firebase configuration:
     const firebaseConfig = {
-      apiKey: "AIzaSyBjRVoHWTz1Z14ApnLiCTW6zddaWBSaWYU",
-      authDomain: "reelsarena-c8f0a.firebaseapp.com",
-      projectId: "reelsarena-c8f0a",
-      storageBucket: "reelsarena-c8f0a.firebasestorage.app",
-      messagingSenderId: "809960694743",
-      appId: "1:809960694743:web:b454f4e8b2ce33205c2192",
-      measurementId: "G-7F2JDV6RRQ"
-    };
+  apiKey: "AIzaSyBjRVoHWTz1Z14ApnLiCTW6zddaWBSaWYU",
+  authDomain: "reelsarena-c8f0a.firebaseapp.com",
+  projectId: "reelsarena-c8f0a",
+  storageBucket: "reelsarena-c8f0a.firebasestorage.app",
+  messagingSenderId: "809960694743",
+  appId: "1:809960694743:web:b454f4e8b2ce33205c2192",
+  measurementId: "G-7F2JDV6RRQ"
+};
+
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    // ===== Silent Auto-Redirect if Already Logged In =====
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
+    // 🔁 Toggle forms
+    const signupForm = document.getElementById('signup-form');
+    const loginForm = document.getElementById('login-form');
+    document.getElementById('to-login').onclick = e => {
+      e.preventDefault();
+      signupForm.classList.remove('active');
+      loginForm.classList.add('active');
+    };
+    document.getElementById('to-signup').onclick = e => {
+      e.preventDefault();
+      loginForm.classList.remove('active');
+      signupForm.classList.add('active');
+    };
+
+    // ✉️ LOGIN
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value.trim();
+      const emailError = document.getElementById('login-email-error');
+      const passwordError = document.getElementById('login-password-error');
+
+      emailError.style.display = passwordError.style.display = "none";
+
+      if (!email) {
+        emailError.textContent = "Please enter your email.";
+        emailError.style.display = "block";
+        return;
+      }
+      if (!/\S+@\S+\.\S+/.test(email)) {
+        emailError.textContent = "Invalid email address.";
+        emailError.style.display = "block";
+        return;
+      }
+      if (!password) {
+        passwordError.textContent = "Please enter your password.";
+        passwordError.style.display = "block";
+        return;
+      }
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
         window.location.href = "dashboard.html";
+      } catch (error) {
+        if (error.code === 'auth/wrong-password') {
+          passwordError.textContent = "Wrong password.";
+          passwordError.style.display = "block";
+        } else if (error.code === 'auth/user-not-found') {
+          emailError.textContent = "User not found.";
+          emailError.style.display = "block";
+        } else {
+          console.log(error.message);
+        }
       }
     });
 
-    // ===== EMAIL SIGNUP =====
-    document.getElementById("signup-form").addEventListener("submit", (e) => {
+    // 🆕 SIGNUP
+    signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById("signup-email").value;
-      const password = document.getElementById("signup-password").value;
-      const confirm = document.getElementById("signup-confirm").value;
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value.trim();
+      const confirm = document.getElementById('signup-confirm').value.trim();
 
-      if (password !== confirm) return;
+      const emailError = document.getElementById('signup-email-error');
+      const passwordError = document.getElementById('signup-password-error');
+      const confirmError = document.getElementById('signup-confirm-error');
 
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => window.location.href = "dashboard.html")
-        .catch(() => {});
+      emailError.style.display = passwordError.style.display = confirmError.style.display = "none";
+
+      if (!email) {
+        emailError.textContent = "Please enter your email.";
+        emailError.style.display = "block";
+        return;
+      }
+      if (!/\S+@\S+\.\S+/.test(email)) {
+        emailError.textContent = "Invalid email address.";
+        emailError.style.display = "block";
+        return;
+      }
+      if (!password) {
+        passwordError.textContent = "Please enter your password.";
+        passwordError.style.display = "block";
+        return;
+      }
+      if (password !== confirm) {
+        confirmError.textContent = "Passwords do not match.";
+        confirmError.style.display = "block";
+        return;
+      }
+
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        if (error.code === 'auth/email-already-in-use') {
+          emailError.textContent = "Email already in use.";
+          emailError.style.display = "block";
+        } else {
+          console.log(error.message);
+        }
+      }
     });
 
-    // ===== EMAIL LOGIN =====
-    document.getElementById("login-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = document.getElementById("login-email").value;
-      const password = document.getElementById("login-password").value;
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => window.location.href = "dashboard.html")
-        .catch(() => {});
+    // 🔘 Google Login
+    document.getElementById('google-login').addEventListener('click', async () => {
+      try {
+        await signInWithPopup(auth, provider);
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        console.log(error.message);
+      }
     });
 
-    // ===== GOOGLE LOGIN (Redirect Mode) =====
-    document.getElementById("google-login").addEventListener("click", () => {
-      signInWithRedirect(auth, provider);
+    // 🔘 Google Signup
+    document.getElementById('google-signup').addEventListener('click', async () => {
+      try {
+        await signInWithPopup(auth, provider);
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        console.log(error.message);
+      }
     });
-
-    document.getElementById("google-signup").addEventListener("click", () => {
-      signInWithRedirect(auth, provider);
-    });
-
-    // ===== Handle Redirect Result =====
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result?.user) window.location.href = "dashboard.html";
-      })
-      .catch(() => {});
   </script>
 </body>
 </html>
