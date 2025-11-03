@@ -19,7 +19,7 @@
       </div>
 
       <!-- Signup Form -->
-      <form id="signup-form" class="form active">
+      <form id="signup-form" class="form">
         <h2>Create Account</h2>
         <input type="text" id="signup-username" placeholder="Username" required />
         <input type="tel" id="signup-phone" placeholder="Phone Number" required />
@@ -42,7 +42,7 @@
       </form>
 
       <!-- Login Form -->
-      <form id="login-form" class="form">
+      <form id="login-form" class="form active">
         <h2>Welcome Back</h2>
         <input type="email" id="login-email" placeholder="Email" required />
         <input type="password" id="login-password" placeholder="Password" required />
@@ -70,6 +70,10 @@
     const toLogin = document.getElementById('to-login');
     const toSignup = document.getElementById('to-signup');
 
+    // Start with login form active by default
+    loginForm.classList.add('active');
+    signupForm.classList.remove('active');
+
     toLogin.addEventListener('click', (e) => {
       e.preventDefault();
       signupForm.classList.remove('active');
@@ -85,7 +89,6 @@
 
   <!-- ====== FIREBASE CONNECTION ====== -->
   <script type="module">
-    // Import Firebase SDKs
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
     import { 
       getAuth, 
@@ -95,7 +98,6 @@
       signInWithPopup 
     } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
-    // ===== Your Firebase Configuration =====
     const firebaseConfig = {
       apiKey: "AIzaSyBjRVoHWTz1Z14ApnLiCTW6zddaWBSaWYU",
       authDomain: "reelsarena-c8f0a.firebaseapp.com",
@@ -106,12 +108,11 @@
       measurementId: "G-7F2JDV6RRQ"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    // ===== SIGNUP FUNCTIONALITY =====
+    // ===== SIGNUP =====
     const signup = document.getElementById("signup-form");
     signup.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -125,10 +126,8 @@
       }
 
       createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        .then(() => {
           alert("Account created successfully!");
-          console.log(userCredential.user);
-          // ✅ Redirect directly to dashboard
           window.location.href = "dashboard.html";
         })
         .catch((error) => {
@@ -136,7 +135,7 @@
         });
     });
 
-    // ===== LOGIN FUNCTIONALITY =====
+    // ===== LOGIN =====
     const login = document.getElementById("login-form");
     login.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -144,9 +143,8 @@
       const password = document.getElementById("login-password").value;
 
       signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        .then(() => {
           alert("Login successful!");
-          console.log(userCredential.user);
           window.location.href = "dashboard.html";
         })
         .catch((error) => {
@@ -157,9 +155,8 @@
     // ===== GOOGLE SIGN-IN =====
     document.getElementById("google-login").addEventListener("click", () => {
       signInWithPopup(auth, provider)
-        .then((result) => {
+        .then(() => {
           alert("Google login successful!");
-          console.log(result.user);
           window.location.href = "dashboard.html";
         })
         .catch((error) => {
@@ -169,9 +166,8 @@
 
     document.getElementById("google-signup").addEventListener("click", () => {
       signInWithPopup(auth, provider)
-        .then((result) => {
+        .then(() => {
           alert("Google signup successful!");
-          console.log(result.user);
           window.location.href = "dashboard.html";
         })
         .catch((error) => {
