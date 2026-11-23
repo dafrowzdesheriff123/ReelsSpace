@@ -1,129 +1,633 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ReelsArena Dashboard</title>
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background: radial-gradient(circle at center, #080808 0%, #000000 100%);
-      color: #ffffff;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
-      overflow: hidden;
-    }
-
-    .welcome {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-      background: linear-gradient(90deg, #00e0ff, #ff00cc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px rgba(255, 0, 204, 0.6);
-    }
-
-    .emoji {
-      font-size: 11rem;
-      animation: bounce 2s infinite ease-in-out, glowShift 4s infinite alternate;
-      text-shadow: 0 0 40px #ff00ff, 0 0 80px #00ffff, 0 0 120px #ff00ff;
-    }
-
-    @keyframes bounce {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-25px);
-      }
-    }
-
-    @keyframes glowShift {
-      0% {
-        text-shadow: 0 0 30px #ff00cc, 0 0 60px #ff00cc, 0 0 100px #00e0ff;
-      }
-      50% {
-        text-shadow: 0 0 30px #00e0ff, 0 0 60px #00e0ff, 0 0 100px #ff00cc;
-      }
-      100% {
-        text-shadow: 0 0 30px #ff00cc, 0 0 60px #00e0ff, 0 0 100px #ff00cc;
-      }
-    }
-
-    h1 {
-      margin-top: 25px;
-      font-size: 1.8rem;
-      text-align: center;
-      opacity: 0.9;
-      background: linear-gradient(90deg, #00e0ff, #ff00cc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px rgba(0, 224, 255, 0.4);
-    }
-
-    button {
-      margin-top: 40px;
-      background: linear-gradient(90deg, #ff00cc, #00e0ff);
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 0 20px rgba(255, 0, 204, 0.5);
-    }
-
-    button:hover {
-      transform: scale(1.07);
-      box-shadow: 0 0 25px rgba(0, 224, 255, 0.8);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReelsArena | Discover</title>
+    <link rel="stylesheet" href="dashboard.css">
 </head>
+
 <body>
-  <div class="welcome" id="welcome-text">Welcome!</div>
-  <div class="emoji">😝</div>
-  <h1>Website still under construction 😅</h1>
-  <button id="logout-btn">Logout</button>
 
-  <!-- Firebase Script -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+<div class="app">
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBjRVoHWTz1Z14ApnLiCTW6zddaWBSaWYU",
-      authDomain: "reelsarena-c8f0a.firebaseapp.com",
-      projectId: "reelsarena-c8f0a",
-      storageBucket: "reelsarena-c8f0a.firebasestorage.app",
-      messagingSenderId: "809960694743",
-      appId: "1:809960694743:web:b454f4e8b2ce33205c2192",
-      measurementId: "G-7F2JDV6RRQ"
-    };
+    <!-- MOBILE EXPLORE BUTTON -->
+    <button class="mobile-explore-btn" id="mobileExploreBtn">
+        <span class="explore-icon">☰</span>
+        <span>Explore</span>
+    </button>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    <!-- DRAWER OVERLAY -->
+    <div class="arena-drawer-overlay" id="arenaDrawerOverlay"></div>
 
-    const welcomeText = document.getElementById("welcome-text");
+    <!-- MOBILE SLIDE DRAWER -->
+    <aside class="arena-drawer" id="arenaDrawer">
 
-    // Display user email
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        welcomeText.textContent = `Welcome, ${user.email}! 👋`;
-      } else {
-        window.location.href = "index.html";
-      }
-    });
+        <div class="drawer-header">
+            <div class="drawer-brand">
+                <div class="drawer-logo">R</div>
+                <div>
+                    <h2>ReelsArena</h2>
+                    <p>Your world. Your arena.</p>
+                </div>
+            </div>
 
-    // Logout
-    document.getElementById("logout-btn").addEventListener("click", async () => {
-      await signOut(auth);
-      window.location.href = "index.html";
-    });
-  </script>
-</body>
-</html>
+            <button class="drawer-close" id="drawerCloseBtn">✕</button>
+        </div>
+
+        <div class="drawer-user">
+            <div class="drawer-avatar" id="drawerAvatar">👤</div>
+            <div>
+                <h3 id="drawerUserName">Welcome back</h3>
+                <p>Explore your community</p>
+            </div>
+        </div>
+
+        <p class="drawer-section-title">YOUR SPACE</p>
+
+        <button class="drawer-item" data-section="myArena">
+            <span class="drawer-item-icon">🏟️</span>
+            <span>My Arena</span>
+            <span class="drawer-arrow">›</span>
+        </button>
+
+        <button class="drawer-item" data-section="inbox">
+            <span class="drawer-item-icon">💬</span>
+            <span>Inbox</span>
+            <span class="drawer-arrow">›</span>
+        </button>
+
+        <button class="drawer-item" data-section="search">
+            <span class="drawer-item-icon">🔍</span>
+            <span>Search</span>
+            <span class="drawer-arrow">›</span>
+        </button>
+
+        <p class="drawer-section-title">DISCOVER</p>
+
+        <button class="drawer-item" data-section="trending">
+            <span class="drawer-item-icon">🔥</span>
+            <span>Trending Now</span>
+            <span class="drawer-arrow">›</span>
+        </button>
+
+        <button class="drawer-item" data-section="creators">
+            <span class="drawer-item-icon">👥</span>
+            <span>Creators Around You</span>
+            <span class="drawer-arrow">›</span>
+        </button>
+
+        <button class="drawer-item" data-section="gaming">
+            <span class="drawer-item-icon">🎮</span>
+            <span>Gaming Arena</span>
+            <span class="drawer-arrow">›</span>
+        </button>
+
+        <button class="drawer-item" data-section="picks">
+            <span class="drawer-item-icon">✨</span>
+            <span>Picks For You</span>
+            <span class="drawer-arrow">›</span>
+        </button>
+
+        <div class="drawer-create">
+            <button id="drawerUploadBtn">＋ Create a Reel</button>
+        </div>
+
+        <button class="drawer-logout" id="drawerLogoutBtn">
+            ↪ Sign Out
+        </button>
+
+        <div class="drawer-footer">
+            <span>REELSARENA</span>
+            <span>Discover • Create • Connect</span>
+        </div>
+    </aside>
+
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">R</div>
+            <div class="brand-name">Reels<span>Arena</span></div>
+        </div>
+
+        <div class="sidebar-profile">
+            <div class="profile-avatar" id="sideAvatar">👤</div>
+            <div class="profile-info">
+                <strong id="sideUserName">Your Account</strong>
+                <span>Creator account</span>
+            </div>
+        </div>
+
+        <div class="nav-label">YOUR ARENA</div>
+
+        <button class="nav-item active" data-section="feed">
+            <span>⌂</span> Home Feed
+        </button>
+
+        <button class="nav-item" data-section="myArena">
+            <span>🏟</span> My Arena
+        </button>
+
+        <button class="nav-item" data-section="inbox">
+            <span>✉</span> Inbox
+        </button>
+
+        <button class="nav-item" data-section="search">
+            <span>⌕</span> Search
+        </button>
+
+        <div class="nav-label">DISCOVER</div>
+
+        <button class="nav-item" data-section="trending">
+            <span>🔥</span> Trending Now
+        </button>
+
+        <button class="nav-item" data-section="creators">
+            <span>♧</span> Creators Around You
+        </button>
+
+        <button class="nav-item" data-section="gaming">
+            <span>🎮</span> Gaming Arena
+        </button>
+
+        <button class="nav-item" data-section="picks">
+            <span>✦</span> Picks For You
+        </button>
+
+        <div class="sidebar-create">
+            <button id="uploadBtn">
+                <span>＋</span> Create Reel
+            </button>
+        </div>
+
+        <div class="sidebar-bottom">
+            <button id="logoutBtn" class="logout-btn">
+                ↪ Sign Out
+            </button>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+                <div class="mobile-brand">
+                    <div class="brand-icon small">R</div>
+                    <span>ReelsArena</span>
+                </div>
+
+                <div class="feed-tabs">
+                    <button class="feed-tab active" data-feed="forYou">
+                        For You
+                    </button>
+
+                    <button class="feed-tab" data-feed="following">
+                        Following
+                    </button>
+
+                    <button class="feed-tab" data-feed="fresh">
+                        Fresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="topbar-actions">
+                <button class="top-icon-button" data-section="search" title="Search">
+                    🔍
+                </button>
+
+                <button class="top-icon-button inbox-button" data-section="inbox" title="Inbox">
+                    💬
+                    <span class="notification-dot"></span>
+                </button>
+            </div>
+
+        </header>
+
+
+        <!-- FEED -->
+        <section class="feed-container" id="feedContainer">
+
+            <div class="feed-inner" id="feedInner">
+
+                <!-- REEL 1 -->
+                <article class="reel" data-creator="Arena Creator">
+
+                    <video class="reel-video"
+                           src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+                           loop
+                           muted
+                           playsinline
+                           autoplay></video>
+
+                    <div class="video-gradient"></div>
+
+                    <div class="reel-top">
+                        <span class="live-tag">● ARENA</span>
+                        <button class="video-sound-btn">🔇</button>
+                    </div>
+
+                    <div class="reel-caption">
+                        <div class="creator-line">
+                            <div class="creator-avatar">🌸</div>
+                            <strong>Arena Creator</strong>
+                            <button class="follow-btn">Follow</button>
+                        </div>
+
+                        <p>Little moments can make the biggest memories ✨</p>
+                        <span class="music-line">♫ Original sound · Arena Creator</span>
+                    </div>
+
+                    <div class="reel-actions">
+
+                        <button class="reel-action like-btn">
+                            <span class="action-icon">♥</span>
+                            <span class="action-count">2.4K</span>
+                        </button>
+
+                        <button class="reel-action comment-btn">
+                            <span class="action-icon">💬</span>
+                            <span class="action-count">128</span>
+                        </button>
+
+                        <button class="reel-action share-btn">
+                            <span class="action-icon">↗</span>
+                            <span class="action-count">Share</span>
+                        </button>
+
+                        <button class="reel-action save-btn">
+                            <span class="action-icon">▣</span>
+                            <span class="action-count">Save</span>
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- REEL 2 -->
+                <article class="reel" data-creator="Explore Daily">
+
+                    <video class="reel-video"
+                           src="https://www.w3schools.com/html/mov_bbb.mp4"
+                           loop
+                           muted
+                           playsinline></video>
+
+                    <div class="video-gradient"></div>
+
+                    <div class="reel-top">
+                        <span class="live-tag">✦ DISCOVER</span>
+                        <button class="video-sound-btn">🔇</button>
+                    </div>
+
+                    <div class="reel-caption">
+                        <div class="creator-line">
+                            <div class="creator-avatar second">🌍</div>
+                            <strong>Explore Daily</strong>
+                            <button class="follow-btn">Follow</button>
+                        </div>
+
+                        <p>Discover something new every day 🌍</p>
+                        <span class="music-line">♫ Trending audio</span>
+                    </div>
+
+                    <div class="reel-actions">
+
+                        <button class="reel-action like-btn">
+                            <span class="action-icon">♥</span>
+                            <span class="action-count">8.1K</span>
+                        </button>
+
+                        <button class="reel-action comment-btn">
+                            <span class="action-icon">💬</span>
+                            <span class="action-count">420</span>
+                        </button>
+
+                        <button class="reel-action share-btn">
+                            <span class="action-icon">↗</span>
+                            <span class="action-count">Share</span>
+                        </button>
+
+                        <button class="reel-action save-btn">
+                            <span class="action-icon">▣</span>
+                            <span class="action-count">Save</span>
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+                <!-- REEL 3 -->
+                <article class="reel" data-creator="Creative Zone">
+
+                    <video class="reel-video"
+                           src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+                           loop
+                           muted
+                           playsinline></video>
+
+                    <div class="video-gradient"></div>
+
+                    <div class="reel-top">
+                        <span class="live-tag">⚡ FRESH</span>
+                        <button class="video-sound-btn">🔇</button>
+                    </div>
+
+                    <div class="reel-caption">
+                        <div class="creator-line">
+                            <div class="creator-avatar third">🎨</div>
+                            <strong>Creative Zone</strong>
+                            <button class="follow-btn">Follow</button>
+                        </div>
+
+                        <p>Welcome to your creative space 🎨</p>
+                        <span class="music-line">♫ Creative sounds</span>
+                    </div>
+
+                    <div class="reel-actions">
+
+                        <button class="reel-action like-btn">
+                            <span class="action-icon">♥</span>
+                            <span class="action-count">950</span>
+                        </button>
+
+                        <button class="reel-action comment-btn">
+                            <span class="action-icon">💬</span>
+                            <span class="action-count">63</span>
+                        </button>
+
+                        <button class="reel-action share-btn">
+                            <span class="action-icon">↗</span>
+                            <span class="action-count">Share</span>
+                        </button>
+
+                        <button class="reel-action save-btn">
+                            <span class="action-icon">▣</span>
+                            <span class="action-count">Save</span>
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- RIGHT DISCOVERY PANEL -->
+    <aside class="discovery-panel">
+
+        <div class="discovery-heading">
+            <h2>Discover</h2>
+            <span class="discovery-subtitle">Explore your world</span>
+        </div>
+
+
+        <!-- TRENDING -->
+        <section class="discovery-card" id="trending">
+
+            <div class="card-heading">
+                <h3>🔥 Trending Now</h3>
+                <button class="see-all" data-section="trending">See all</button>
+            </div>
+
+            <div class="trend-item" data-section="trending">
+                <div class="trend-number">01</div>
+                <div>
+                    <strong>#CampusLife</strong>
+                    <small>12.8K reels</small>
+                </div>
+                <span class="trend-up">↗</span>
+            </div>
+
+            <div class="trend-item" data-section="trending">
+                <div class="trend-number">02</div>
+                <div>
+                    <strong>#Vibes</strong>
+                    <small>8.4K reels</small>
+                </div>
+                <span class="trend-up">↗</span>
+            </div>
+
+            <div class="trend-item" data-section="trending">
+                <div class="trend-number">03</div>
+                <div>
+                    <strong>#Creativity</strong>
+                    <small>6.2K reels</small>
+                </div>
+                <span class="trend-up">↗</span>
+            </div>
+
+            <div class="trend-item" data-section="trending">
+                <div class="trend-number">04</div>
+                <div>
+                    <strong>#Football</strong>
+                    <small>5.9K reels</small>
+                </div>
+                <span class="trend-up">↗</span>
+            </div>
+
+        </section>
+
+
+        <!-- CREATORS -->
+        <section class="discovery-card" id="creators">
+
+            <div class="card-heading">
+                <h3>👥 Creators Around You</h3>
+                <button class="see-all" data-section="creators">See all</button>
+            </div>
+
+            <div class="creator-suggestion">
+                <div class="suggestion-avatar">🎧</div>
+
+                <div class="suggestion-info">
+                    <strong>Vibe Maker</strong>
+                    <small>Creator · Music</small>
+                </div>
+
+                <button class="mini-follow">+</button>
+            </div>
+
+            <div class="creator-suggestion">
+                <div class="suggestion-avatar purple">🎬</div>
+
+                <div class="suggestion-info">
+                    <strong>Motion Studio</strong>
+                    <small>Creator · Video</small>
+                </div>
+
+                <button class="mini-follow">+</button>
+            </div>
+
+            <div class="creator-suggestion">
+                <div class="suggestion-avatar cyan">⚽</div>
+
+                <div class="suggestion-info">
+                    <strong>Goal Zone</strong>
+                    <small>Creator · Sports</small>
+                </div>
+
+                <button class="mini-follow">+</button>
+            </div>
+
+        </section>
+
+
+        <!-- MORE THAN A FEED -->
+        <section class="discovery-card arena-feature" id="myArena">
+
+            <div class="feature-icon">✦</div>
+
+            <div>
+                <h3>More Than A Feed</h3>
+                <p>Your space to create, discover and connect.</p>
+            </div>
+
+            <button class="feature-button" data-section="myArena">
+                Explore My Arena →
+            </button>
+
+        </section>
+
+
+        <!-- GAMING -->
+        <section class="discovery-card gaming-card" id="gaming">
+
+            <div class="gaming-header">
+                <span>🎮</span>
+                <div>
+                    <h3>Gaming Arena</h3>
+                    <p>Gaming community</p>
+                </div>
+            </div>
+
+            <button class="gaming-explore" data-section="gaming">
+                Explore Gaming →
+            </button>
+
+        </section>
+
+
+        <!-- PICKS -->
+        <section class="discovery-card picks-card" id="picks">
+
+            <div class="card-heading">
+                <h3>✨ Picks For You</h3>
+                <button class="see-all" data-section="picks">Explore</button>
+            </div>
+
+            <p>Fresh content selected for your discovery.</p>
+
+            <div class="picks-tags">
+                <span>Music</span>
+                <span>Comedy</span>
+                <span>Sports</span>
+                <span>Art</span>
+            </div>
+
+        </section>
+
+
+        <div class="panel-footer">
+            <span>ReelsArena</span>
+            <span>Discover · Create · Connect</span>
+        </div>
+
+    </aside>
+
+
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="mobile-bottom-nav">
+
+        <button class="bottom-nav-item active" data-section="feed">
+            <span>⌂</span>
+            <small>Home</small>
+        </button>
+
+        <button class="bottom-nav-item" data-section="search">
+            <span>⌕</span>
+            <small>Search</small>
+        </button>
+
+        <button class="bottom-create-btn" id="mobileCreateBtn">
+            <span>＋</span>
+        </button>
+
+        <button class="bottom-nav-item" data-section="inbox">
+            <span>♡</span>
+            <small>Inbox</small>
+        </button>
+
+        <button class="bottom-nav-item" data-section="myArena">
+            <span>◉</span>
+            <small>Arena</small>
+        </button>
+
+    </nav>
+
+
+    <!-- COMMENTS DRAWER -->
+    <div class="comments-overlay" id="commentsOverlay">
+
+        <div class="comments-drawer">
+
+            <div class="comments-header">
+                <h3>Comments</h3>
+                <button id="commentsClose">✕</button>
+            </div>
+
+            <div class="comments-content" id="commentsContent">
+                <div class="empty-comments">
+                    <span>💬</span>
+                    <p>Be the first to start the conversation.</p>
+                </div>
+            </div>
+
+            <form class="comment-form" id="commentForm">
+                <input
+                    type="text"
+                    id="commentInput"
+                    placeholder="Add a comment..."
+                    maxlength="300"
+                    autocomplete="off">
+
+                <button type="submit">Send</button>
+            </form>
+
+        </div>
+    </div>
+
+
+    <!-- UPLOAD MODAL -->
+    <div class="upload-overlay" id="uploadOverlay">
+
+        <div class="upload-modal">
+
+            <div class="upload-header">
+                <h2>Create a Reel</h2>
+                <button id="uploadClose">✕</button>
+            </div>
+
+            <div class="upload-area" id="uploadArea">
+
+                <div class="upload-symbol">＋</div>
+
+                <h3>Add your video</h3>
+                <p>Select a video from your device</p>
+
+                <label class="upload-select-btn">
+                    Choose Video
+                    <input
+                        type="file"
