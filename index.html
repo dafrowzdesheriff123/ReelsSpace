@@ -1,254 +1,395 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ReelsArena | Login</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
+
   <style>
     .error {
-      color: red;
+      color: #ff5252;
       font-size: 13px;
-      margin-top: -10px;
-      margin-bottom: 10px;
+      margin-top: -5px;
+      margin-bottom: 8px;
       display: none;
     }
+
     .success {
-      color: green;
+      color: #4ade80;
       font-size: 14px;
       margin-bottom: 10px;
       display: none;
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <div class="card" id="form-card">
-      <div class="logo">
-        <div class="diamond"><span class="letters">RA</span></div>
-        <h1>ReelsArena</h1>
+
+<div class="container">
+
+  <div class="card" id="form-card">
+
+    <div class="logo">
+      <div class="diamond">
+        <span class="letters">RA</span>
+      </div>
+      <h1>ReelsArena</h1>
+    </div>
+
+
+    <!-- LOGIN -->
+    <form id="login-form" class="form active">
+
+      <h2>Welcome Back</h2>
+
+      <input
+        type="email"
+        id="login-email"
+        placeholder="Email"
+        required
+      >
+
+      <div id="login-email-error" class="error"></div>
+
+      <input
+        type="password"
+        id="login-password"
+        placeholder="Password"
+        required
+      >
+
+      <div id="login-password-error" class="error"></div>
+
+      <button type="submit">Login</button>
+
+      <div class="divider">
+        <span>or continue with</span>
       </div>
 
-      <!-- LOGIN FORM -->
-      <form id="login-form" class="form active">
-        <h2>Welcome Back</h2>
-        <input type="email" id="login-email" placeholder="Email" required />
-        <div id="login-email-error" class="error"></div>
+      <button type="button" class="google-btn" id="google-login">
+        <img
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
+          alt="Google"
+        >
+        Login with Google
+      </button>
 
-        <input type="password" id="login-password" placeholder="Password" required />
-        <div id="login-password-error" class="error"></div>
+      <p>
+        Don't have an account?
+        <a href="#" id="to-signup">Create one</a>
+      </p>
 
-        <button type="submit">Login</button>
+    </form>
 
-        <div class="divider"><span>or continue with</span></div>
-        <button type="button" class="google-btn" id="google-login">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" />
-          Login with Google
-        </button>
 
-        <p>Don’t have an account? <a href="#" id="to-signup">Create one</a></p>
-      </form>
+    <!-- SIGNUP -->
+    <form id="signup-form" class="form">
 
-      <!-- SIGNUP FORM -->
-      <form id="signup-form" class="form">
-        <h2>Create Account</h2>
-        <input type="email" id="signup-email" placeholder="Email" required />
-        <div id="signup-email-error" class="error"></div>
-        <input type="text" id="signup-username" placeholder="Username" required />
-        <input type="password" id="signup-password" placeholder="Password" required />
-        <div id="signup-password-error" class="error"></div>
-        <input type="password" id="signup-confirm" placeholder="Confirm Password" required />
-        <div id="signup-confirm-error" class="error"></div>
-        <div id="signup-success" class="success"></div>
+      <h2>Create Account</h2>
 
-        <button type="submit">Create Account</button>
+      <input
+        type="email"
+        id="signup-email"
+        placeholder="Email"
+        required
+      >
 
-        <div class="divider"><span>or continue with</span></div>
-        <button type="button" class="google-btn" id="google-signup">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" />
-          Sign up with Google
-        </button>
+      <div id="signup-email-error" class="error"></div>
 
-        <p>Already have an account? <a href="#" id="to-login">Login here</a></p>
-      </form>
-    </div>
+      <input
+        type="text"
+        id="signup-username"
+        placeholder="Username"
+        required
+      >
+
+      <input
+        type="password"
+        id="signup-password"
+        placeholder="Password"
+        required
+      >
+
+      <div id="signup-password-error" class="error"></div>
+
+      <input
+        type="password"
+        id="signup-confirm"
+        placeholder="Confirm Password"
+        required
+      >
+
+      <div id="signup-confirm-error" class="error"></div>
+
+      <div id="signup-success" class="success"></div>
+
+      <button type="submit">Create Account</button>
+
+      <div class="divider">
+        <span>or continue with</span>
+      </div>
+
+      <button type="button" class="google-btn" id="google-signup">
+        <img
+          src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
+          alt="Google"
+        >
+        Sign up with Google
+      </button>
+
+      <p>
+        Already have an account?
+        <a href="#" id="to-login">Login here</a>
+      </p>
+
+    </form>
+
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { 
-      getAuth, 
-      createUserWithEmailAndPassword, 
-      signInWithEmailAndPassword, 
-      GoogleAuthProvider, 
-      signInWithPopup 
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-    // 🔥 Replace with your Firebase configuration
-    const firebaseConfig = {
-  apiKey: "AIzaSyBjRVoHWTz1Z14ApnLiCTW6zddaWBSaWYU",
-  authDomain: "reelsarena-c8f0a.firebaseapp.com",
-  projectId: "reelsarena-c8f0a",
-  storageBucket: "reelsarena-c8f0a.firebasestorage.app",
-  messagingSenderId: "809960694743",
-  appId: "1:809960694743:web:b454f4e8b2ce33205c2192",
-  measurementId: "G-7F2JDV6RRQ"
-};
+</div>
 
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+<script type="module">
 
-    // Toggle between forms
-    const signupForm = document.getElementById('signup-form');
-    const loginForm = document.getElementById('login-form');
-    document.getElementById('to-login').onclick = e => {
-      e.preventDefault();
-      signupForm.classList.remove('active');
-      loginForm.classList.add('active');
-    };
-    document.getElementById('to-signup').onclick = e => {
-      e.preventDefault();
-      loginForm.classList.remove('active');
-      signupForm.classList.add('active');
-    };
+  import { initializeApp } from
+    "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
-    // LOGIN
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('login-email').value.trim();
-      const password = document.getElementById('login-password').value.trim();
-      const emailError = document.getElementById('login-email-error');
-      const passwordError = document.getElementById('login-password-error');
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup,
+    updateProfile,
+    onAuthStateChanged
+  } from
+    "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-      emailError.style.display = passwordError.style.display = "none";
 
-      if (!email) {
-        emailError.textContent = "⚠ Please enter your email.";
-        emailError.style.display = "block";
-        return;
-      }
-      if (!/\S+@\S+\.\S+/.test(email)) {
-        emailError.textContent = "⚠ Invalid email address.";
-        emailError.style.display = "block";
-        return;
-      }
-      if (!password) {
-        passwordError.textContent = "⚠ Please enter your password.";
+  // FIREBASE CONFIG
+  const firebaseConfig = {
+    apiKey: "AIzaSyBjRVoHWTz1Z14ApnLiCTW6zddaWBSaWYU",
+    authDomain: "reelsarena-c8f0a.firebaseapp.com",
+    projectId: "reelsarena-c8f0a",
+    storageBucket: "reelsarena-c8f0a.firebasestorage.app",
+    messagingSenderId: "809960694743",
+    appId: "1:809960694743:web:b454f4e8b2ce33205c2192",
+    measurementId: "G-7F2JDV6RRQ"
+  };
+
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+
+  // ELEMENTS
+  const loginForm = document.getElementById("login-form");
+  const signupForm = document.getElementById("signup-form");
+
+
+  // SWITCH FORMS
+  document.getElementById("to-signup").onclick = (e) => {
+    e.preventDefault();
+
+    loginForm.classList.remove("active");
+    signupForm.classList.add("active");
+  };
+
+
+  document.getElementById("to-login").onclick = (e) => {
+    e.preventDefault();
+
+    signupForm.classList.remove("active");
+    loginForm.classList.add("active");
+  };
+
+
+  // CHECK IF ALREADY LOGGED IN
+  onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+      window.location.replace("dashboard.html");
+    }
+
+  });
+
+
+  // LOGIN
+  loginForm.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value;
+
+    const emailError = document.getElementById("login-email-error");
+    const passwordError = document.getElementById("login-password-error");
+
+    emailError.style.display = "none";
+    passwordError.style.display = "none";
+
+    if (!email) {
+      emailError.textContent = "Please enter your email.";
+      emailError.style.display = "block";
+      return;
+    }
+
+    if (!password) {
+      passwordError.textContent = "Please enter your password.";
+      passwordError.style.display = "block";
+      return;
+    }
+
+    try {
+
+      await signInWithEmailAndPassword(auth, email, password);
+
+      window.location.replace("dashboard.html");
+
+    } catch (error) {
+
+      if (
+        error.code === "auth/invalid-credential" ||
+        error.code === "auth/wrong-password"
+      ) {
+
+        passwordError.textContent = "Incorrect email or password.";
         passwordError.style.display = "block";
-        return;
-      }
 
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "dashboard.html";
-      } catch (error) {
-        const code = error.code;
-        emailError.style.display = passwordError.style.display = "none";
-        switch (code) {
-          case 'auth/wrong-password':
-            passwordError.textContent = "⚠ Wrong password.";
-            passwordError.style.display = "block";
-            break;
-          case 'auth/user-not-found':
-            emailError.textContent = "⚠ No account found with this email.";
-            emailError.style.display = "block";
-            break;
-          case 'auth/invalid-email':
-            emailError.textContent = "⚠ Invalid email address.";
-            emailError.style.display = "block";
-            break;
-          case 'auth/missing-password':
-            passwordError.textContent = "⚠ Please enter your password.";
-            passwordError.style.display = "block";
-            break;
-          default:
-            passwordError.textContent = "⚠ Login failed. Try again.";
-            passwordError.style.display = "block";
-        }
-      }
-    });
+      } else if (error.code === "auth/user-not-found") {
 
-    // SIGNUP
-    signupForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('signup-email').value.trim();
-      const password = document.getElementById('signup-password').value.trim();
-      const confirm = document.getElementById('signup-confirm').value.trim();
-      const emailError = document.getElementById('signup-email-error');
-      const passwordError = document.getElementById('signup-password-error');
-      const confirmError = document.getElementById('signup-confirm-error');
-      const successMsg = document.getElementById('signup-success');
-
-      emailError.style.display = passwordError.style.display = confirmError.style.display = successMsg.style.display = "none";
-
-      if (!email) {
-        emailError.textContent = "⚠ Please enter your email.";
+        emailError.textContent = "Account not found.";
         emailError.style.display = "block";
-        return;
-      }
-      if (!/\S+@\S+\.\S+/.test(email)) {
-        emailError.textContent = "⚠ Invalid email address.";
+
+      } else if (error.code === "auth/invalid-email") {
+
+        emailError.textContent = "Invalid email address.";
         emailError.style.display = "block";
-        return;
-      }
-      if (!password) {
-        passwordError.textContent = "⚠ Please enter your password.";
+
+      } else {
+
+        passwordError.textContent = error.message;
         passwordError.style.display = "block";
-        return;
-      }
-      if (password.length < 6) {
-        passwordError.textContent = "⚠ Password should be at least 6 characters.";
-        passwordError.style.display = "block";
-        return;
-      }
-      if (password !== confirm) {
-        confirmError.textContent = "⚠ Passwords do not match.";
-        confirmError.style.display = "block";
-        return;
+
       }
 
-      try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        successMsg.textContent = "✅ Account created successfully!";
-        successMsg.style.display = "block";
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 1500);
-      } catch (error) {
-        const code = error.code;
-        switch (code) {
-          case 'auth/email-already-in-use':
-            emailError.textContent = "⚠ Email already in use.";
-            emailError.style.display = "block";
-            break;
-          default:
-            emailError.textContent = "⚠ Signup failed. Try again.";
-            emailError.style.display = "block";
-        }
-      }
-    });
+    }
 
-    // GOOGLE LOGIN
-    document.getElementById('google-login').addEventListener('click', async () => {
-      try {
-        await signInWithPopup(auth, provider);
-        window.location.href = "dashboard.html";
-      } catch (error) {
-        console.log(error.message);
-      }
-    });
+  });
 
-    // GOOGLE SIGNUP
-    document.getElementById('google-signup').addEventListener('click', async () => {
-      try {
-        await signInWithPopup(auth, provider);
-        window.location.href = "dashboard.html";
-      } catch (error) {
-        console.log(error.message);
+
+  // SIGNUP
+  signupForm.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const email = document.getElementById("signup-email").value.trim();
+    const username = document.getElementById("signup-username").value.trim();
+    const password = document.getElementById("signup-password").value;
+    const confirm = document.getElementById("signup-confirm").value;
+
+    const emailError = document.getElementById("signup-email-error");
+    const passwordError = document.getElementById("signup-password-error");
+    const confirmError = document.getElementById("signup-confirm-error");
+    const successMsg = document.getElementById("signup-success");
+
+    emailError.style.display = "none";
+    passwordError.style.display = "none";
+    confirmError.style.display = "none";
+    successMsg.style.display = "none";
+
+
+    if (!email) {
+      emailError.textContent = "Please enter your email.";
+      emailError.style.display = "block";
+      return;
+    }
+
+    if (!username) {
+      emailError.textContent = "Please enter a username.";
+      emailError.style.display = "block";
+      return;
+    }
+
+    if (password.length < 6) {
+      passwordError.textContent = "Password must be at least 6 characters.";
+      passwordError.style.display = "block";
+      return;
+    }
+
+    if (password !== confirm) {
+      confirmError.textContent = "Passwords do not match.";
+      confirmError.style.display = "block";
+      return;
+    }
+
+
+    try {
+
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await updateProfile(result.user, {
+        displayName: username
+      });
+
+      successMsg.textContent = "Account created successfully!";
+      successMsg.style.display = "block";
+
+      setTimeout(() => {
+        window.location.replace("dashboard.html");
+      }, 800);
+
+    } catch (error) {
+
+      if (error.code === "auth/email-already-in-use") {
+
+        emailError.textContent = "This email is already registered.";
+        emailError.style.display = "block";
+
+      } else {
+
+        emailError.textContent = error.message;
+        emailError.style.display = "block";
+
       }
-    });
-  </script>
+
+    }
+
+  });
+
+
+  // GOOGLE AUTH
+  async function googleLogin() {
+
+    try {
+
+      await signInWithPopup(auth, provider);
+
+      window.location.replace("dashboard.html");
+
+    } catch (error) {
+
+      alert("Google login failed: " + error.message);
+
+    }
+
+  }
+
+
+  document.getElementById("google-login")
+    .addEventListener("click", googleLogin);
+
+  document.getElementById("google-signup")
+    .addEventListener("click", googleLogin);
+
+
+</script>
+
 </body>
 </html>
